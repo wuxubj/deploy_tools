@@ -28,6 +28,7 @@ function init_work()
     git --version
     git config --global user.name "wuxubj"
     git config --global user.email "742745426@qq.com"
+    git config --list
 }
 #install nginx
 function deploy_nginx()
