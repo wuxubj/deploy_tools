@@ -30,7 +30,7 @@ function init_work()
     git config --global user.email "742745426@qq.com"
     git config --list
 }
-#install nginx
+#install nginx. See https://www.cnblogs.com/kaid/p/7640723.html
 function deploy_nginx()
 {
     cd
@@ -66,7 +66,7 @@ function deploy_nginx()
     ps aux | grep nginx
 }
 
-#shadowsocks
+#install shadowsocks. See https://zoomyale.com/2016/vultr_and_ss/
 function deploy_shadowsocks()
 {
     cd
@@ -82,6 +82,7 @@ function deploy_shadowsocks()
     lsmod | grep bbr
 }
 
+#install python3. See https://zhuanlan.zhihu.com/p/34024112
 function deploy_python3()
 {
     cd
