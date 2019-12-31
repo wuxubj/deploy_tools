@@ -39,7 +39,6 @@ function deploy_shadowsocks()
     chmod +x shadowsocksR.sh
     ./shadowsocksR.sh 2>&1 | tee shadowsocksR.log
     python /usr/local/shadowsocks/server.py -c /etc/shadowsocks.json -d start
-    ps aux | grep "shadowsocks.json" | grep -v "grep"
 }
 
 #install ss-server
@@ -100,7 +99,7 @@ function start_ss()
 {
     cd $WORKSPACE
     python /usr/local/shadowsocks/server.py -c /etc/shadowsocks.json -d start
-    ps aux | grep "shadowsocks.json" | grep -v "grep"
+    sleep 3
 }
 
 function stop_ss_server()
@@ -155,7 +154,7 @@ function start_ss_server()
         setsid ss-server -c /etc/shadowsocks-libev/config_$app.json -u > /dev/null 2>&1 &
         echo "$app $passwd"
     fi
-    ps aux | grep "shadowsocks-libev" | grep "config" | grep -v "grep"
+    sleep 3
 }
 
 function status_ss()
@@ -181,10 +180,12 @@ if [ "$behavior" == "deploy" ];then
     if [ "$target" == "ss" ];then
         stop_firewall
         deploy_shadowsocks
+        status_ss
         deploy_bbr
     elif [ "$target" == "ss-server" ];then
         stop_firewall
         deploy_shadowsocks_libev
+        status_ss_server
         deploy_bbr
     else
         usage $behavior
@@ -194,19 +195,23 @@ elif [ "$behavior" == "start" ];then
     if [ "$target" == "ss" ];then
         stop_ss
         start_ss
+        status_ss
     elif [ "$target" == "ss-server" ];then
         app=$3
         stop_ss_server $app
         start_ss_server $app
+        status_ss_server
     else
         usage $behavior
     fi
 elif [ "$behavior" == "stop" ];then
     if [ "$target" == "ss" ];then
         stop_ss
+        status_ss
     elif [ "$target" == "ss-server" ];then
         app=$3
         stop_ss_server $app
+        status_ss_server
     else
         usage $behavior
     fi

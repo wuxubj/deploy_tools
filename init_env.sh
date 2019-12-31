@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#centos 7_x64
 function usage()
 {
     echo "usage: sh init_env.sh work/nginx/ss/python3"
