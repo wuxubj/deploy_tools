@@ -271,7 +271,7 @@ install_config() {
 reboot_os() {
     echo
     echo -e "${green}Info:${plain} The system needs to reboot."
-    read -p "Do you want to restart system? [y/n]" is_reboot
+    #read -p "Do you want to restart system? [y/n]" is_reboot
     is_reboot="y"
     if [[ ${is_reboot} == "y" || ${is_reboot} == "Y" ]]; then
         reboot
