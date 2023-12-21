@@ -49,15 +49,15 @@ function deploy_nginx()
     systemctl disable firewalld.service
     firewall-cmd --state
     #start install nginx
-    yum install gcc-c++
+    yum install -y gcc-c++
     yum install -y pcre pcre-devel
     yum install -y zlib zlib-devel
-    wget -c https://nginx.org/download/nginx-1.10.1.tar.gz
-    tar -zxvf nginx-1.10.1.tar.gz
-    cd nginx-1.10.1
-    ./configure
-    make
-    make install
+    yum install -y openssl openssl-devel
+    wget -c https://nginx.org/download/nginx-1.13.6.tar.gz
+    tar -zxvf nginx-1.13.6.tar.gz
+    cd nginx-1.13.6
+    ./configure --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module
+    make && make install
     #create soft link
     ln -s /usr/local/nginx/sbin/nginx /usr/local/bin/nginx
     ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
@@ -96,14 +96,14 @@ function deploy_python3()
         return
     fi
     #start install python3
-    yum install make gcc gcc-c++ 
+    yum install -y make gcc gcc-c++
+    yum install -y bzip2-devel libffi-devel readline-devel patch
     python --version
-    wget -c https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
-    tar -zxvf Python-3.6.4.tgz
-    cd Python-3.6.4
-    ./configure --prefix=/usr/local/python3 --enable-optimizations
-    make
-    make install
+    wget -c https://www.python.org/ftp/python/3.8.5/Python-3.8.5.tgz
+    tar -zxvf Python-3.8.5.tgz
+    cd Python-3.8.5
+    ./configure --prefix=/usr/local/python3 # --enable-optimizations
+    make && make install
     #create soft link
     ln -s /usr/local/python3/bin/python3 /usr/bin/python3
     ln -s /usr/local/python3/bin/python3 /usr/local/bin/python3
